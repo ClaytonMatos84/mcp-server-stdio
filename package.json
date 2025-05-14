@@ -4,7 +4,7 @@
     "main": "main.js",
     "scripts": {
         "start": "node dist/main.js",
-        "build": "tsc && chmod 755 build/main.js"
+        "build": "tsc && chmod 755 dist/main.js"
     },
     "author": "Clayton Matos",
     "license": "ISC",
@@ -18,5 +18,8 @@
         "@types/node": "^22.15.17",
         "typescript": "^5.8.3"
     },
-    "type": "module"
+    "type": "module",
+    "bin": {
+        "mcp-server-stdio": "./dist/main.js"
+    }
 }

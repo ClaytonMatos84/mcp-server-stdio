@@ -1,3 +1,5 @@
+import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import { z } from 'zod';
 import axios from 'axios';
 
 interface WeatherApiResponse {
@@ -14,7 +16,27 @@ interface WeatherApiResponse {
 const GEOCODING_URL = 'https://geocoding-api.open-meteo.com/v1/search';
 const API_URL = 'https://api.open-meteo.com/v1/forecast';
 
-export async function getWeather(city: string): Promise<WeatherApiResponse> {
+export async function registerWeatherTool(server:McpServer): Promise<void> {
+    server.tool(
+        'get-weather',
+        'Retornar o clima de uma cidade',
+        {
+            cidade: z.string().describe('Nome da cidade')
+        },
+        async ({cidade}) => {
+            const weatherResponse = await _getWeather(cidade as string);
+
+            return {
+                content: [{
+                    type: 'text',
+                    text: JSON.stringify(weatherResponse)
+                }]
+            };
+        }
+    );
+}
+
+const _getWeather = async (city: string): Promise<WeatherApiResponse> => {
     try {
         const geoResponse = await axios.get(GEOCODING_URL, {
             params: {
@@ -42,7 +64,7 @@ export async function getWeather(city: string): Promise<WeatherApiResponse> {
 
         const current = weatherResponse.data.current;
 
-        const condition = getWeatherCondition(current.weather_code);
+        const condition = _getWeatherCondition(current.weather_code);
         const temperature = Math.round(current.temperature_2m);
         const humidity = Math.round(current.relative_humidity_2m);
         const windSpeed = Math.round(current.wind_speed_10m);
@@ -66,7 +88,7 @@ export async function getWeather(city: string): Promise<WeatherApiResponse> {
     }
 }
 
-const getWeatherCondition = (code: number): string => {
+const _getWeatherCondition = (code: number): string => {
     const conditions: Record<number, string> = {
         0: 'Céu limpo',
         1: 'Principalmente claro',

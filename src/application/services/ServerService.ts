@@ -2,6 +2,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 
 import { registerMathTool } from '../../tools/MathTool.js';
 import { registerWeatherTool } from '../../tools/WeatherTool.js';
+import { registerUsersTool } from '../../tools/UsersTool.js';
 
 export function createServer(): McpServer {
     const server = new McpServer({
@@ -15,4 +16,5 @@ export function createServer(): McpServer {
 export async function registerTools(server: McpServer): Promise<void> {
     await registerMathTool(server);
     await registerWeatherTool(server);
+    await registerUsersTool(server);
 }

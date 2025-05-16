@@ -82,7 +82,7 @@ const _getWeather = async (city: string): Promise<WeatherApiResponse> => {
     } catch (error) {
         if (error instanceof Error) {
             console.error('Error fetching weather data:', error.message);
-            throw new Error(`Erro ao buscar dados do climáticos. ${error.message}`);
+            throw new Error(`Erro ao buscar dados do clima. ${error.message}`);
         }
         throw new Error('Erro ao buscar dados do clima.');
     }

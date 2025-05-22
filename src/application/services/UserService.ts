@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { ResponseCountry, User } from '../model/User.js';
 
-const API_URL = 'http://localhost:8080';
+const API_URL = 'http://localhost:9797';
 
 export async function getSuperUsers(): Promise<User[]> {
     try {

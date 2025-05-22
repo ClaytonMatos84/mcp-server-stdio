@@ -10,7 +10,7 @@ export async function registerWeatherTool(server:McpServer): Promise<void> {
         {
             cidade: z.string().describe('Nome da cidade')
         },
-        async ({cidade}) => {
+        async ({ cidade }) => {
             const weatherResponse = await getWeather(cidade as string);
 
             return {

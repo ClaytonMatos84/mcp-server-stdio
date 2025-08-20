@@ -4,6 +4,7 @@ import { registerMathTool } from '../../tools/MathTool.js';
 import { registerWeatherTool } from '../../tools/WeatherTool.js';
 import { registerUsersTool } from '../../tools/UsersTool.js';
 import { registerDockerTools } from '../../tools/DockerTool.js';
+import { registerKubernetesTools } from '../../tools/KubernetesTool.js';
 
 export function createServer(): McpServer {
     const server = new McpServer({
@@ -19,4 +20,5 @@ export async function registerTools(server: McpServer): Promise<void> {
     await registerWeatherTool(server);
     await registerUsersTool(server);
     await registerDockerTools(server);
+    await registerKubernetesTools(server);
 }
